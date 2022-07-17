@@ -1,0 +1,9 @@
+{
+  "name": "js-jigsaw-engine",
+  "version": "0.0.1-beta1",
+  "description": "Parts of a jigsaw-puzzle game engine",
+  "main": "index.js",
+  "repository": "git@github.com:maximva/js-jigsaw-engine.git",
+  "author": "Maxim Vanden Abeele <maxim.vandenabeele@gmail.com>",
+  "license": "MIT"
+}
