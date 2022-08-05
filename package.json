@@ -1,9 +1,20 @@
 {
   "name": "js-jigsaw-engine",
   "version": "0.0.1-beta1",
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean"
+  },
   "description": "Parts of a jigsaw-puzzle game engine",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
   "repository": "git@github.com:maximva/js-jigsaw-engine.git",
   "author": "Maxim Vanden Abeele <maxim.vandenabeele@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.7.4"
+  }
 }
