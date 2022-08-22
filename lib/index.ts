@@ -1,4 +1,3 @@
-import Puzzle from './puzzle/puzzle';
-import Seeds from './core/seeds';
+import CanvasPuzzle from './puzzle/canvasPuzzle';
 
-export { Puzzle, Seeds };
+export { CanvasPuzzle };
