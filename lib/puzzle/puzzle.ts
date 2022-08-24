@@ -1,33 +1,71 @@
-import LineFunction from "./lineFunction";
-import Column from "./column";
-import Row from "./row";
+import LineFunction from "../core/lineFunction";
+import Column from "../core/column";
+import Row from "../core/row";
 import Piece from "./piece";
+import CanvasRenderStrategy from "./canvasRenderStrategy";
 
 export default class Puzzle {
+  private image: HTMLImageElement;
   private readonly numberOfRows: number;
   private readonly numberOfColumns: number;
   protected readonly width: number;
   protected readonly height: number;
   protected readonly rowLineFunctions: LineFunction[];
   protected readonly columnLineFunctions: LineFunction[];
-
   protected readonly rows: Row[];
   protected readonly columns: Column[];
-
   protected puzzlePieces: Piece[];
 
-  constructor(numberOfRows: number, numberOfColumns: number, width: number, height: number) {
+  constructor(image: HTMLImageElement, numberOfRows: number, numberOfColumns: number, width: number, height: number) {
+    this.image = image;
+    this.image.width = width;
     this.numberOfRows = numberOfRows;
     this.numberOfColumns = numberOfColumns;
     this.width = width;
     this.height = height;
     this.rowLineFunctions = Puzzle.generateLineFunctions(numberOfRows + 1);
     this.columnLineFunctions = Puzzle.generateLineFunctions(numberOfColumns + 1);
-
     this.rows = this.generateRows();
     this.columns = this.generateColumns();
-
     this.puzzlePieces = this.generatePieces();
+  }
+
+  public getPuzzlePieces(): Piece[] {
+    return this.puzzlePieces;
+  }
+
+  // should be moved, is pure canvas
+  public showImage(context: CanvasRenderingContext2D) {
+    context.globalAlpha = 0.5;
+    context.drawImage(this.image, 0, 0, context.canvas.clientWidth, context.canvas.clientHeight);
+  }
+
+  // should be moved, is pure canvas
+  public drawGrid(context: CanvasRenderingContext2D) {
+    context.save();
+    context.strokeStyle = '#ffffff';
+    // Columns
+    for (let i = 1; i < this.columnLineFunctions.length; i++) {
+      context.beginPath();
+      const x = i * this.width / this.columns.length;
+      context.moveTo(x, 0);
+      for (let j = 0; j < context.canvas.clientHeight; j += 1) {
+        context.lineTo(x + this.columnLineFunctions[i].call(j), j);
+      }
+      context.stroke();
+    }
+
+    // Rows
+    for (let i = 1; i < this.rowLineFunctions.length; i++) {
+      context.beginPath();
+      const y = i * this.height / this.rows.length;
+      context.moveTo(0, y);
+      for (let j = 0; j < context.canvas.clientWidth; j += 1) {
+        context.lineTo(j, y + this.rowLineFunctions[i].call(j));
+      }
+      context.stroke();
+    }
+    context.restore();
   }
 
   private static generateLineFunctions(amount: number) :LineFunction[] {
@@ -65,7 +103,7 @@ export default class Puzzle {
     const pieces: Piece[] = [];
     for (const column of this.columns) {
       for (const row of this.rows) {
-        pieces.push(new Piece(row, column));
+        pieces.push(new Piece(this.image, row, column, new CanvasRenderStrategy()));
       }
     }
     return pieces;

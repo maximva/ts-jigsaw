@@ -1,3 +1,3 @@
-import CanvasPuzzle from './puzzle/canvasPuzzle';
+import Puzzle from './puzzle/puzzle';
 
-export { CanvasPuzzle };
+export { Puzzle };
