@@ -2,7 +2,6 @@ import Row from "../core/row";
 import Column from "../core/column";
 import Coordinates from "../core/coordinates";
 import RenderStrategy from "./renderStrategy";
-import CanvasRenderStrategy from "./canvasRenderStrategy";
 
 export default class Piece {
   private sourceImage: HTMLImageElement;
