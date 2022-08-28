@@ -1,6 +1,6 @@
 import Row from "./row";
 import Column from "./column";
-import LineFunction from "./lineFunction";
+import Edge from "./edge";
 
 interface Coordinate {
   x: number;
@@ -19,23 +19,34 @@ export default class Coordinates {
   public constructor(row: Row, column: Column) {
     this.rowHeight = row.height;
     this.columnWidth = column.width;
-    this._topLeft = this.getCoordinate(row.position, column.position, row.topEdge, column.leftEdge);
-    this._topRight = this.getCoordinate(row.position, column.position + 1, row.topEdge, column.rightEdge);
-    this._bottomRight = this.getCoordinate(row.position + 1, column.position + 1, row.bottomEdge, column.rightEdge);
-    this._bottomLeft = this.getCoordinate(row.position + 1, column.position, row.bottomEdge, column.leftEdge);
+    this._topLeft = this.getCoordinate(
+      row.position, column.position, row.topEdge, column.leftEdge,
+    );
+    this._topRight = this.getCoordinate(
+      row.position, column.position + 1, row.topEdge, column.rightEdge,
+    );
+    this._bottomRight = this.getCoordinate(
+      row.position + 1, column.position + 1, row.bottomEdge, column.rightEdge,
+    );
+    this._bottomLeft = this.getCoordinate(
+      row.position + 1, column.position, row.bottomEdge, column.leftEdge,
+    );
   }
 
   private getCoordinate(
     rowsBefore: number,
     columnsBefore: number,
-    rowFunction: LineFunction,
-    columnFunction: LineFunction
+    rowEdge: Edge,
+    columnEdge: Edge
   ) :Coordinate {
     const baseX = columnsBefore * this.columnWidth;
     const baseY = rowsBefore * this.rowHeight;
-    const adjustmentX = columnFunction.call(baseY);
-    const adjustmentY = rowFunction.call(baseX);
-    return { x: baseX + adjustmentX, y: baseY + adjustmentY };
+    const adjustmentX = columnEdge.lineFunction.call(baseY);
+    const adjustmentY = rowEdge.lineFunction.call(baseX);
+    return {
+      x: baseX + adjustmentX,
+      y: baseY + adjustmentY
+    };
   }
 
   public get topLeft() {

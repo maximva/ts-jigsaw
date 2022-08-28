@@ -1,7 +1,7 @@
-import RenderStrategy from "./renderStrategy";
-import Column from "../core/column";
-import Row from "../core/row";
-import Coordinates from "../core/coordinates";
+import IRenderStrategy from "../IRenderStrategy";
+import Column from "../../core/column";
+import Row from "../../core/row";
+import Coordinates from "../../core/coordinates";
 
 interface edge {
   [key: string]: number;
@@ -15,7 +15,7 @@ interface tabTranslationType {
   [key: string]: lobe;
 }
 
-export default class CanvasRenderStrategy implements RenderStrategy {
+export default class CanvasRenderStrategy implements IRenderStrategy {
   private htmlCanvas: HTMLCanvasElement;
 
   constructor() {
@@ -74,10 +74,10 @@ export default class CanvasRenderStrategy implements RenderStrategy {
 
   private drawTab(row: Row, column: Column, start: number, end: number, canvasContext: CanvasRenderingContext2D, edge: string) {
     const curveConstant = 5;
-    const bulgeWidthConstant =  12; // 7 + Math.floor(Math.random() * 2);
-    const bulgeHeightConstant = 22; // 17 + Math.floor(Math.random() * 4);
-    const baseX = edge === 'upper' ? row.height * row.position : row.height * (row.position + 1);
-    const baseY = edge === 'right' ? column.width * (column.position + 1) : column.width * column.position;
+    const bulgeWidthConstant =  12;
+    const bulgeHeightConstant = 22;
+    const baseY = edge === 'upper' ? row.height * row.position : row.height * (row.position + 1);
+    const baseX = edge === 'right' ? column.width * (column.position + 1) : column.width * column.position;
     const rowEdge = edge === 'upper' ? row.topEdge : row.bottomEdge;
     const columnEdge = edge === 'right' ? column.rightEdge : column.leftEdge;
 
@@ -85,26 +85,26 @@ export default class CanvasRenderStrategy implements RenderStrategy {
       startLobe: {
         upper: {
           cpx: start + curveConstant,
-          cpy: baseX + rowEdge.call(start),
+          cpy: baseY + rowEdge.lineFunction.call(start + curveConstant),
           x: start,
-          y: baseX + rowEdge.call(start) + curveConstant,
+          y: baseY + rowEdge.lineFunction.call(start) + curveConstant,
         },
         lower: {
           cpx: start - curveConstant,
-          cpy: baseX + rowEdge.call(start),
+          cpy: baseY + rowEdge.lineFunction.call(start - curveConstant),
           x: start,
-          y: baseX + rowEdge.call(start) + curveConstant,
+          y: baseY + rowEdge.lineFunction.call(start) + curveConstant,
         },
         right: {
-          cpx: baseY + columnEdge.call(start),
+          cpx: baseX + columnEdge.lineFunction.call(start + curveConstant),
           cpy: start + curveConstant,
-          x: baseY + columnEdge.call(start) + curveConstant,
+          x: baseX + columnEdge.lineFunction.call(start) + curveConstant,
           y: start,
         },
         left: {
-          cpx: baseY + columnEdge.call(start),
+          cpx: baseX + columnEdge.lineFunction.call(start - curveConstant),
           cpy: start - curveConstant,
-          x: baseY + columnEdge.call(start) + curveConstant,
+          x: baseX + columnEdge.lineFunction.call(start) + curveConstant,
           y: start,
         }
       },
@@ -112,59 +112,59 @@ export default class CanvasRenderStrategy implements RenderStrategy {
         upper: {
           cp1x: start - bulgeWidthConstant,
           cp2x: end + bulgeWidthConstant,
-          cp1y: baseX + rowEdge.call(start) + bulgeHeightConstant,
-          cp2y: baseX + rowEdge.call(start) + bulgeHeightConstant,
+          cp1y: baseY + rowEdge.lineFunction.call(start) + bulgeHeightConstant,
+          cp2y: baseY + rowEdge.lineFunction.call(start) + bulgeHeightConstant,
           x: end,
-          y: baseX + rowEdge.call(start) + curveConstant,
+          y: baseY + rowEdge.lineFunction.call(end) + curveConstant,
         },
         lower: {
           cp1x: start + bulgeWidthConstant,
           cp2x: end - bulgeWidthConstant,
-          cp1y: baseX + rowEdge.call(start) + bulgeHeightConstant,
-          cp2y: baseX + rowEdge.call(start) + bulgeHeightConstant,
+          cp1y: baseY + rowEdge.lineFunction.call(start) + bulgeHeightConstant,
+          cp2y: baseY + rowEdge.lineFunction.call(start) + bulgeHeightConstant,
           x: end,
-          y: baseX + rowEdge.call(start) + curveConstant,
+          y: baseY + rowEdge.lineFunction.call(end) + curveConstant,
         },
         right: {
-          cp1x: baseY + columnEdge.call(start) + bulgeHeightConstant,
-          cp2x: baseY + columnEdge.call(start) + bulgeHeightConstant,
+          cp1x: baseX + columnEdge.lineFunction.call(start) + bulgeHeightConstant,
+          cp2x: baseX + columnEdge.lineFunction.call(start) + bulgeHeightConstant,
           cp1y: start - bulgeWidthConstant,
           cp2y: end + bulgeWidthConstant,
-          x: baseY + columnEdge.call(start) + curveConstant,
+          x: baseX + columnEdge.lineFunction.call(end) + curveConstant,
           y: end,
         },
         left: {
-          cp1x: baseY + columnEdge.call(start) + bulgeHeightConstant,
-          cp2x: baseY + columnEdge.call(start) + bulgeHeightConstant,
+          cp1x: baseX + columnEdge.lineFunction.call(start) + bulgeHeightConstant,
+          cp2x: baseX + columnEdge.lineFunction.call(start) + bulgeHeightConstant,
           cp1y: start + bulgeWidthConstant,
           cp2y: end - bulgeWidthConstant,
-          x: baseY + columnEdge.call(start) + curveConstant,
+          x: baseX + columnEdge.lineFunction.call(end) + curveConstant,
           y: end,
         }
       },
       endLobe: {
         upper: {
           cpx: end - curveConstant,
-          cpy: baseX + rowEdge.call(end + curveConstant),
+          cpy: baseY + rowEdge.lineFunction.call(end + curveConstant),
           x: end,
-          y: baseX + rowEdge.call(end),
+          y: baseY + rowEdge.lineFunction.call(end),
         },
         lower: {
           cpx: end + curveConstant,
-          cpy: baseX + rowEdge.call(end + curveConstant),
+          cpy: baseY + rowEdge.lineFunction.call(end + curveConstant),
           x: end,
-          y: baseX + rowEdge.call(end),
+          y: baseY + rowEdge.lineFunction.call(end),
         },
         right: {
-          cpx: baseY + columnEdge.call(end + curveConstant),
+          cpx: baseX + columnEdge.lineFunction.call(end + curveConstant),
           cpy: end - curveConstant,
-          x: baseY + columnEdge.call(end),
+          x: baseX + columnEdge.lineFunction.call(end),
           y: end,
         },
         left: {
-          cpx: baseY + columnEdge.call(end + curveConstant),
+          cpx: baseX + columnEdge.lineFunction.call(end + curveConstant),
           cpy: end + curveConstant,
-          x: baseY + columnEdge.call(end),
+          x: baseX + columnEdge.lineFunction.call(end),
           y: end,
         }
       }
@@ -198,15 +198,18 @@ export default class CanvasRenderStrategy implements RenderStrategy {
   private drawTopEdge(column: Column, row: Row, coordinates: Coordinates, canvasContext: CanvasRenderingContext2D) {
     let tabDrawn = false;
     const baseY = row.height * row.position;
+    const middleOfPiece = (coordinates.topRight.x - coordinates.topLeft.x) / 2;
+
     for (let i = coordinates.topLeft.x; i < coordinates.topRight.x; i += 1) {
-      if (i - (column.width * column.position) > 23 && row.position !== 0) {
-        if (!tabDrawn) {
-          this.drawTab(row, column, i, i+14, canvasContext, 'upper');
-          tabDrawn = true;
-        }
-      } else if (i < 23 || i > 37) {
-        const adjustmentY = row.topEdge.call(i);
+      const normalisedIndex = i - coordinates.topLeft.x;
+      const tabWidthConstant = column.width / 4;
+
+      if (normalisedIndex < (middleOfPiece - tabWidthConstant/2) || normalisedIndex > (middleOfPiece + tabWidthConstant/2)) {
+        const adjustmentY = row.topEdge.lineFunction.call(i);
         canvasContext.lineTo(i, baseY + adjustmentY);
+      } else if (!tabDrawn) {
+        this.drawTab(row, column, i, i+tabWidthConstant, canvasContext, 'upper');
+        tabDrawn = true;
       }
     }
   }
@@ -214,15 +217,18 @@ export default class CanvasRenderStrategy implements RenderStrategy {
   private drawRightEdge(column: Column, row: Row, coordinates: Coordinates, canvasContext: CanvasRenderingContext2D) {
     let tabDrawn = false;
     const baseX = (column.position+1) * column.width;
+    const middleOfPiece = (coordinates.bottomRight.y - coordinates.topRight.y) / 2;
+
     for (let i = coordinates.topRight.y; i < coordinates.bottomRight.y; i += 1) {
-      if (i - (row.height * row.position) > 23) {
-        if (!tabDrawn) {
-          this.drawTab(row, column, i, i+14, canvasContext, 'right');
-          tabDrawn = true;
-        }
-      } else if (i < 23 || i > 37) {
-        const adjustmentX = column.rightEdge.call(i);
+      const normalisedIndex = i - coordinates.topRight.y;
+      const tabWidthConstant = row.height / 4;
+
+      if (normalisedIndex < (middleOfPiece - tabWidthConstant/2) || normalisedIndex > (middleOfPiece + tabWidthConstant/2)) {
+        const adjustmentX = column.rightEdge.lineFunction.call(i);
         canvasContext.lineTo(baseX + adjustmentX, i);
+      } else if (!tabDrawn) {
+        this.drawTab(row, column, i, i+tabWidthConstant, canvasContext, 'right');
+        tabDrawn = true;
       }
     }
   }
@@ -230,15 +236,18 @@ export default class CanvasRenderStrategy implements RenderStrategy {
   private drawBottomEdge(column: Column, row: Row, coordinates: Coordinates, canvasContext: CanvasRenderingContext2D) {
     let tabDrawn = false;
     const baseY = row.height * (row.position+1);
+    const middleOfPiece = (coordinates.bottomRight.x - coordinates.bottomLeft.x) / 2
+
     for (let i = coordinates.bottomRight.x; i > coordinates.bottomLeft.x; i -= 1) {
-      if (i - (column.width * column.position) < 37) {
-        if (!tabDrawn) {
-          this.drawTab(row, column, i, i-14, canvasContext, 'lower');
-          tabDrawn = true;
-        }
-      } else if (i < 23 || i > 37) {
-        const adjustmentY = row.bottomEdge.call(i);
+      const normalisedIndex = i - coordinates.bottomLeft.x;
+      const tabWidthConstant = column.width / 4;
+
+      if (normalisedIndex < (middleOfPiece - tabWidthConstant/2) || normalisedIndex > (middleOfPiece + tabWidthConstant/2)) {
+        const adjustmentY = row.bottomEdge.lineFunction.call(i);
         canvasContext.lineTo(i, baseY + adjustmentY);
+      } else if (!tabDrawn) {
+        this.drawTab(row, column, i, i-tabWidthConstant, canvasContext, 'lower');
+        tabDrawn = true;
       }
     }
   }
@@ -246,17 +255,19 @@ export default class CanvasRenderStrategy implements RenderStrategy {
   private drawLeftEdge(column: Column, row: Row, coordinates: Coordinates, canvasContext: CanvasRenderingContext2D) {
     let tabDrawn = false;
     const baseX = column.width * column.position;
+    const middleOfPiece = (coordinates.bottomLeft.y -  coordinates.topLeft.y) / 2;
+
     for (let i = coordinates.bottomLeft.y; i > coordinates.topLeft.y; i -= 1) {
-      if (i - (row.height * row.position) < 37) {
-        if (!tabDrawn) {
-          this.drawTab(row, column, i, i-14, canvasContext, 'left');
-          tabDrawn = true;
-        }
-      } else if (i < 23 || i > 37) {
-        const adjustmentX = column.leftEdge.call(i);
+      const normalisedIndex = i - coordinates.topLeft.y;
+      const tabWidthConstant = row.height / 4;
+
+      if (normalisedIndex < (middleOfPiece - tabWidthConstant/2) || normalisedIndex > (middleOfPiece + tabWidthConstant/2)) {
+        const adjustmentX = column.leftEdge.lineFunction.call(i);
         canvasContext.lineTo(baseX + adjustmentX, i);
+      } else if (!tabDrawn) {
+        this.drawTab(row, column, i, i-tabWidthConstant, canvasContext, 'left');
+        tabDrawn = true;
       }
     }
   }
-
 }
