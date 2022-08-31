@@ -1,5 +1,3 @@
-import Seed from "./seed";
-
 /**
  * The mathematical function defining an edge
  */
@@ -8,7 +6,7 @@ export default class LineFunction {
   outsideEdge: boolean;
 
   constructor(outsideEdge: boolean = false) {
-    this.seed = Seed.generate();
+    this.seed = Math.random();
     this.outsideEdge = outsideEdge;
   }
 

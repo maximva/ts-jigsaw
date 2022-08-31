@@ -2,6 +2,7 @@ import IRenderStrategy from "../IRenderStrategy";
 import Column from "../../core/column";
 import Row from "../../core/row";
 import Coordinates from "../../core/coordinates";
+import CanvasEdgeRenderer from "./canvasEdgeRenderer";
 
 interface edge {
   [key: string]: number;
@@ -66,10 +67,13 @@ export default class CanvasRenderStrategy implements IRenderStrategy {
   }
 
   private drawPiece(column: Column, row: Row, coordinates: Coordinates, canvasContext: CanvasRenderingContext2D) {
-    this.drawTopEdge(column, row, coordinates, canvasContext);
-    this.drawRightEdge(column, row, coordinates, canvasContext);
-    this.drawBottomEdge(column, row, coordinates, canvasContext);
-    this.drawLeftEdge(column, row, coordinates, canvasContext);
+    // this.drawTopEdge(column, row, coordinates, canvasContext);
+    // this.drawRightEdge(column, row, coordinates, canvasContext);
+    // this.drawBottomEdge(column, row, coordinates, canvasContext);
+    // this.drawLeftEdge(column, row, coordinates, canvasContext);
+
+    const edgeRenderer = new CanvasEdgeRenderer(row, column, coordinates, canvasContext);
+    edgeRenderer.renderEdges();
   }
 
   private drawTab(row: Row, column: Column, start: number, end: number, canvasContext: CanvasRenderingContext2D, edge: string) {
@@ -81,13 +85,27 @@ export default class CanvasRenderStrategy implements IRenderStrategy {
     const rowEdge = edge === 'upper' ? row.topEdge : row.bottomEdge;
     const columnEdge = edge === 'right' ? column.rightEdge : column.leftEdge;
 
+    const tabTranslationIdea: tabTranslationType = {
+      startLobe: {
+        horizontal: {
+          cpx: 0,
+          cpy: 0,
+          x: start,
+          y: 0,
+        },
+        vertical: {
+
+        }
+      }
+    };
+
     const tabOrientationTranslation: tabTranslationType = {
       startLobe: {
         upper: {
           cpx: start + curveConstant,
           cpy: baseY + rowEdge.lineFunction.call(start + curveConstant),
           x: start,
-          y: baseY + rowEdge.lineFunction.call(start) + curveConstant,
+          y: baseY + rowEdge.lineFunction.call(start) + curveConstant, // +curveconstant for down, - for up
         },
         lower: {
           cpx: start - curveConstant,
@@ -145,7 +163,7 @@ export default class CanvasRenderStrategy implements IRenderStrategy {
       endLobe: {
         upper: {
           cpx: end - curveConstant,
-          cpy: baseY + rowEdge.lineFunction.call(end + curveConstant),
+          cpy: baseY + rowEdge.lineFunction.call(end - curveConstant),
           x: end,
           y: baseY + rowEdge.lineFunction.call(end),
         },
@@ -156,7 +174,7 @@ export default class CanvasRenderStrategy implements IRenderStrategy {
           y: baseY + rowEdge.lineFunction.call(end),
         },
         right: {
-          cpx: baseX + columnEdge.lineFunction.call(end + curveConstant),
+          cpx: baseX + columnEdge.lineFunction.call(end - curveConstant),
           cpy: end - curveConstant,
           x: baseX + columnEdge.lineFunction.call(end),
           y: end,
