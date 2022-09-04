@@ -54,6 +54,8 @@ export default class CanvasRenderStrategy implements IRenderStrategy {
   private extractImage() {
     const puzzlePieceImage = new Image();
     puzzlePieceImage.src = this.htmlCanvas.toDataURL('image/png');
+    puzzlePieceImage.style.width = `${this.htmlCanvas.width / 4}px`;
+    puzzlePieceImage.style.height = `${this.htmlCanvas.height / 4}px`;
     return puzzlePieceImage;
   }
 

@@ -20,11 +20,11 @@ export default class Puzzle {
     image: HTMLImageElement, numberOfRows: number, numberOfColumns: number, width: number, height: number,
   ) {
     this.image = image;
-    this.image.width = width;
+    this.image.width = width * 4;
     this.numberOfRows = numberOfRows;
     this.numberOfColumns = numberOfColumns;
-    this.width = width;
-    this.height = height;
+    this.width = width * 4;
+    this.height = height * 4;
     this.rowEdges = Puzzle.generateEdges(this.width, numberOfRows + 1, numberOfColumns);
     this.columnEdges = Puzzle.generateEdges(this.height, numberOfColumns + 1, numberOfRows);
     this.rows = this.generateRows();
@@ -49,10 +49,10 @@ export default class Puzzle {
     // Columns
     for (let i = 1; i < this.columnEdges.length; i++) {
       context.beginPath();
-      const x = i * this.width / this.columns.length;
+      const x = i * this.width / 4 / this.columns.length;
       context.moveTo(x, 0);
-      for (let j = 0; j < context.canvas.clientHeight; j += 1) {
-        context.lineTo(x + this.columnEdges[i].lineFunction.call(j), j);
+      for (let j = 0; j < context.canvas.clientHeight*4; j += 1) {
+        context.lineTo(x + this.columnEdges[i].lineFunction.call(j), j/4);
       }
       context.stroke();
     }
@@ -60,7 +60,7 @@ export default class Puzzle {
     // Rows
     for (let i = 1; i < this.rowEdges.length; i++) {
       context.beginPath();
-      const y = i * this.height / this.rows.length;
+      const y = i * this.height / 4 / this.rows.length;
       context.moveTo(0, y);
       for (let j = 0; j < context.canvas.clientWidth; j += 1) {
         context.lineTo(j, y + this.rowEdges[i].lineFunction.call(j));
