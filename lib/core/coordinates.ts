@@ -13,6 +13,11 @@ export default class Coordinates {
   private readonly _bottomRight: Coordinate;
   private readonly _bottomLeft: Coordinate;
 
+  readonly topCenter: number;
+  readonly rightCenter: number;
+  readonly bottomCenter: number;
+  readonly leftCenter: number;
+
   private rowHeight: number;
   private columnWidth: number;
 
@@ -31,6 +36,11 @@ export default class Coordinates {
     this._bottomLeft = this.getCoordinate(
       row.position + 1, column.position, row.bottomEdge, column.leftEdge,
     );
+
+    this.topCenter = this._topLeft.x + ((this._topRight.x - this._topLeft.x) / 2);
+    this.rightCenter = this._topRight.y + ((this._bottomRight.y - this._topRight.y) / 2);
+    this.bottomCenter = this._bottomLeft.x + ((this._bottomRight.x - this._bottomLeft.x) / 2);
+    this.leftCenter = this._topLeft.y + ((this._bottomLeft.y - this._topLeft.y) / 2);
   }
 
   private getCoordinate(

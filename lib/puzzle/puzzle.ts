@@ -25,8 +25,8 @@ export default class Puzzle {
     this.numberOfColumns = numberOfColumns;
     this.width = width;
     this.height = height;
-    this.rowEdges = Puzzle.generateEdges(numberOfRows + 1, numberOfColumns);
-    this.columnEdges = Puzzle.generateEdges(numberOfColumns + 1, numberOfRows);
+    this.rowEdges = Puzzle.generateEdges(this.width, numberOfRows + 1, numberOfColumns);
+    this.columnEdges = Puzzle.generateEdges(this.height, numberOfColumns + 1, numberOfRows);
     this.rows = this.generateRows();
     this.columns = this.generateColumns();
     this.puzzlePieces = this.generatePieces();
@@ -70,11 +70,11 @@ export default class Puzzle {
     context.restore();
   }
 
-  private static generateEdges(amount: number, edgeSegments: number) :Edge[] {
+  private static generateEdges(edgeLength: number, amount: number, edgeSegments: number) :Edge[] {
     const edges: Edge[] = [];
     for (let i = 0; i < amount; i += 1) {
       const outsideEdge = (i === 0 || i === amount-1);
-      edges.push(new Edge(edgeSegments, outsideEdge));
+      edges.push(new Edge(edgeLength, edgeSegments, outsideEdge));
     }
     return edges;
   }
