@@ -15,6 +15,9 @@ export default class Tab {
   // The height of the main lob of the tab
   readonly mainLobeHeight: number;
 
+  // Whether the tab should go up/forward or down/left
+  readonly upOrForward: boolean;
+
   constructor(segmentLength: number) {
     const curveBase = segmentLength / 20;
     const lobeWidthBase = segmentLength / 8;
@@ -23,5 +26,6 @@ export default class Tab {
     this.endCurveDiameter = curveBase + Math.floor(Math.random() * curveBase * 2);
     this.mainLobeWidth = lobeWidthBase + Math.floor(Math.random() *  lobeWidthBase / 4);
     this.mainLobeHeight = lobeHeightBase + Math.floor(Math.random() * lobeHeightBase / 4);
+    this.upOrForward = Math.random() > 0.5;
   }
 }
