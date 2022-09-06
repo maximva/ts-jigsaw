@@ -6,4 +6,5 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: yarn
-      - run: jest --testd
+      - run: yarn add --dev jest ts-jest
+      - run: jest --test
