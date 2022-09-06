@@ -49,10 +49,10 @@ export default class Puzzle {
     // Columns
     for (let i = 1; i < this.columnEdges.length; i++) {
       context.beginPath();
-      const x = i * this.width / 4 / this.columns.length;
+      const x = i * context.canvas.clientWidth / this.columns.length;
       context.moveTo(x, 0);
-      for (let j = 0; j < context.canvas.clientHeight*4; j += 1) {
-        context.lineTo(x + this.columnEdges[i].lineFunction.call(j), j/4);
+      for (let j = 0; j < context.canvas.clientHeight; j += 1) {
+        context.lineTo(x + this.columnEdges[i].lineFunction.call(j*4), j);
       }
       context.stroke();
     }
@@ -60,10 +60,10 @@ export default class Puzzle {
     // Rows
     for (let i = 1; i < this.rowEdges.length; i++) {
       context.beginPath();
-      const y = i * this.height / 4 / this.rows.length;
+      const y = i * context.canvas.clientHeight / this.rows.length;
       context.moveTo(0, y);
       for (let j = 0; j < context.canvas.clientWidth; j += 1) {
-        context.lineTo(j, y + this.rowEdges[i].lineFunction.call(j));
+        context.lineTo(j, y + this.rowEdges[i].lineFunction.call(j*4));
       }
       context.stroke();
     }

@@ -1,3 +1,1 @@
-import Puzzle from './puzzle/puzzle';
-
-export { Puzzle };
+export {default as Puzzle} from './puzzle/puzzle';

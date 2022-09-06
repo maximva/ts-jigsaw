@@ -1,0 +1,9 @@
+lib
+node_modules
+__tests__
+coverage
+./jest.config.ts
+./.editorconfig
+./.gitignore
+./tsconfig.json
+.github
