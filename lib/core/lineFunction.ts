@@ -6,10 +6,10 @@ export default class LineFunction {
   outsideEdge: boolean;
   craziness: number;
 
-  constructor(outsideEdge: boolean = false) {
+  constructor(outsideEdge: boolean = false, craziness: number = 2) {
     this.seed = Math.random();
     this.outsideEdge = outsideEdge;
-    this.craziness = 2; // 0 == straight edges
+    this.craziness = craziness; // 0 == straight edges
   }
 
   /**

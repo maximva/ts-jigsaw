@@ -5,7 +5,7 @@
     "build": "tsc --build",
     "clean": "tsc --build --clean",
     "test": "jest",
-    "test-coverage": "jest --collectCoverage"
+    "test:coverage": "jest --collectCoverage"
   },
   "description": "Parts of a jigsaw-puzzle game engine",
   "main": "dist/index.js",
