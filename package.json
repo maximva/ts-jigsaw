@@ -1,6 +1,6 @@
 {
-  "name": "@nighthawks/js-jigsaw",
-  "version": "0.1.0-beta1",
+  "name": "@nighthawks/ts-jigsaw",
+  "version": "0.0.1-beta.1",
   "scripts": {
     "build": "tsc --build",
     "clean": "tsc --build --clean",
@@ -13,7 +13,7 @@
   "files": [
     "/dist"
   ],
-  "repository": "git@github.com:maximva/js-jigsaw-engine.git",
+  "repository": "git@github.com:maximva/ts-jigsaw.git",
   "author": "Maxim Vanden Abeele <maxim.vandenabeele@gmail.com>",
   "license": "MIT",
   "devDependencies": {
