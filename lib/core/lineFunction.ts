@@ -2,10 +2,16 @@
  * The mathematical function defining an edge
  */
 export default class LineFunction {
-  seed: number;
-  outsideEdge: boolean;
-  craziness: number;
+  private seed: number;
+  private outsideEdge: boolean;
+  private craziness: number;
+  private amplitude: number = 4;
 
+  /**
+   *
+   * @param outsideEdge
+   * @param craziness
+   */
   constructor(outsideEdge: boolean = false, craziness: number = 2) {
     this.seed = Math.random();
     this.outsideEdge = outsideEdge;
@@ -20,7 +26,7 @@ export default class LineFunction {
     if (this.outsideEdge) {
       return 0;
     } else {
-      return this.craziness * 4 * Math.sin((index / (15 + (this.seed * 20))) / 4);
+      return this.craziness * this.amplitude * Math.sin((index / (15 + (this.seed * 20))) / 4);
     }
   }
 }
