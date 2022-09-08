@@ -36,40 +36,6 @@ export default class Puzzle {
     return this.puzzlePieces;
   }
 
-  // should be moved, is pure canvas
-  public showImage(context: CanvasRenderingContext2D) {
-    context.globalAlpha = 0.5;
-    context.drawImage(this.image, 0, 0, context.canvas.clientWidth, context.canvas.clientHeight);
-  }
-
-  // should be moved, is pure canvas
-  public drawGrid(context: CanvasRenderingContext2D) {
-    context.save();
-    context.strokeStyle = '#ffffff';
-    // Columns
-    for (let i = 1; i < this.columnEdges.length; i++) {
-      context.beginPath();
-      const x = i * context.canvas.clientWidth / this.columns.length;
-      context.moveTo(x, 0);
-      for (let j = 0; j < context.canvas.clientHeight; j += 1) {
-        context.lineTo(x + this.columnEdges[i].lineFunction.call(j*4), j);
-      }
-      context.stroke();
-    }
-
-    // Rows
-    for (let i = 1; i < this.rowEdges.length; i++) {
-      context.beginPath();
-      const y = i * context.canvas.clientHeight / this.rows.length;
-      context.moveTo(0, y);
-      for (let j = 0; j < context.canvas.clientWidth; j += 1) {
-        context.lineTo(j, y + this.rowEdges[i].lineFunction.call(j*4));
-      }
-      context.stroke();
-    }
-    context.restore();
-  }
-
   private static generateEdges(edgeLength: number, amount: number, edgeSegments: number) :Edge[] {
     const edges: Edge[] = [];
     for (let i = 0; i < amount; i += 1) {
