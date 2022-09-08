@@ -3,6 +3,8 @@
 
 # ts-jigsaw
 
+[@nighthawks/ts-jigsaw on NPM](https://www.npmjs.com/package/@nighthawks/ts-jigsaw)
+
 Generates a set of puzzle pieces from any image.
 
 ![puzzle pieces](./resources/puzzle-pieces.png)
