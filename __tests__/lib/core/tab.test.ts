@@ -3,9 +3,9 @@ import Tab from '../../../lib/core/tab';
 describe('Tab class', () => {
   const segmentLength = 10;
   const tab = new Tab(segmentLength);
+  const curveBase = segmentLength / 20;
 
   it('Should instantiate startCurveDiameter with correct value', () => {
-    const curveBase = segmentLength / 20;
     const expectedStartCurveDiameterMinimum: number = curveBase;
     const expectedStartCurveDiameterMaximum: number = curveBase*3;
     expect(tab.startCurveDiameter).toBeGreaterThanOrEqual(expectedStartCurveDiameterMinimum);
@@ -13,7 +13,6 @@ describe('Tab class', () => {
   });
 
   it('Should instantiate endCurveDiameter with correct value', () => {
-    const curveBase = segmentLength / 20;
     const expectedEndCurveDiameterMinimum: number = curveBase;
     const expectedEndCurveDiameterMaximum: number = curveBase*3;
     expect(tab.endCurveDiameter).toBeGreaterThanOrEqual(expectedEndCurveDiameterMinimum);
