@@ -1,12 +1,8 @@
 import Edge from "./edge";
 
-export interface Positional {
-  position: number;
-}
-
-export default class Row implements Positional {
-  position: number;
-  height: number;
+export default class Row {
+  readonly position: number;
+  readonly height: number;
   readonly topEdge: Edge;
   readonly bottomEdge: Edge;
 

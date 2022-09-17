@@ -11,6 +11,7 @@ export default class CanvasRenderStrategy implements IRenderStrategy {
     this.htmlCanvas.width = column.width * 2;
     this.htmlCanvas.height = row.height * 2;
     const canvasContext = this.htmlCanvas.getContext('2d');
+    /* istanbul ignore next line */
     if (!canvasContext) {
       console.warn('Canvas context is null, the puzzle piece cannot be generated');
       return;
