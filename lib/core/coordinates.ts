@@ -18,23 +18,35 @@ export default class Coordinates {
   readonly bottomCenter: number;
   readonly leftCenter: number;
 
-  private rowHeight: number;
-  private columnWidth: number;
+  private readonly rowHeight: number;
+  private readonly columnWidth: number;
 
   public constructor(row: Row, column: Column) {
     this.rowHeight = row.height;
     this.columnWidth = column.width;
     this._topLeft = this.getCoordinate(
-      row.position, column.position, row.topEdge, column.leftEdge,
+      row.position,
+      column.position,
+      row.topEdge,
+      column.leftEdge,
     );
     this._topRight = this.getCoordinate(
-      row.position, column.position + 1, row.topEdge, column.rightEdge,
+      row.position,
+      column.position + 1,
+      row.topEdge,
+      column.rightEdge,
     );
     this._bottomRight = this.getCoordinate(
-      row.position + 1, column.position + 1, row.bottomEdge, column.rightEdge,
+      row.position + 1,
+      column.position + 1,
+      row.bottomEdge,
+      column.rightEdge,
     );
     this._bottomLeft = this.getCoordinate(
-      row.position + 1, column.position, row.bottomEdge, column.leftEdge,
+      row.position + 1,
+      column.position,
+      row.bottomEdge,
+      column.leftEdge,
     );
 
     this.topCenter = this._topLeft.x + ((this._topRight.x - this._topLeft.x) / 2);

@@ -5,7 +5,7 @@ import CanvasRenderStrategy from "./canvasRenderStrategy/canvasRenderStrategy";
 import Edge from "../core/edge";
 
 export default class Puzzle {
-  private image: HTMLImageElement;
+  private readonly image: HTMLImageElement;
   private readonly numberOfRows: number;
   private readonly numberOfColumns: number;
   private readonly width: number;
@@ -14,7 +14,7 @@ export default class Puzzle {
   private readonly columnEdges: Edge[];
   private readonly rows: Row[];
   private readonly columns: Column[];
-  private puzzlePieces: Piece[] = [];
+  private readonly puzzlePieces: Piece[] = [];
 
   constructor(
     image: HTMLImageElement, numberOfRows: number, numberOfColumns: number, width: number, height: number,

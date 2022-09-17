@@ -2,9 +2,9 @@
  * The mathematical function defining an edge
  */
 export default class LineFunction {
-  private seed: number;
-  private outsideEdge: boolean;
-  private craziness: number;
+  private readonly seed: number;
+  private readonly outsideEdge: boolean;
+  private readonly craziness: number;
   private amplitude: number = 4;
 
   /**

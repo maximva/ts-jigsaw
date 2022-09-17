@@ -24,7 +24,6 @@ export default class CanvasEdgeRenderer {
   private column: Column;
   private coordinates: Coordinates;
   private canvasContext: CanvasRenderingContext2D;
-  private renderOrder: EDGES[] = [EDGES.TOP, EDGES.RIGHT, EDGES.BOTTOM, EDGES.LEFT];
 
   constructor(row: Row, column: Column, coordinates: Coordinates, canvasContext: CanvasRenderingContext2D) {
     this.row = row;
@@ -201,26 +200,5 @@ export default class CanvasEdgeRenderer {
       tabOrientationTranslation.endLobe[edgeName].x,
       tabOrientationTranslation.endLobe[edgeName].y,
     );
-    //
-    // this.canvasContext.quadraticCurveTo(
-    //   start + tab.startCurveDiameter,
-    //   base + edge.lineFunction.call(start + tab.startCurveDiameter),
-    //   start,
-    //   base + edge.lineFunction.call(start) + tab.startCurveDiameter
-    // );
-    // this.canvasContext.bezierCurveTo(
-    //   start - tab.mainLobeWidth,
-    //   base + edge.lineFunction.call(start) + tab.mainLobeHeight,
-    //   end + tab.mainLobeWidth,
-    //   base + edge.lineFunction.call(start) + tab.mainLobeHeight,
-    //   end,
-    //   base + edge.lineFunction.call(end) + tab.endCurveDiameter,
-    // );
-    // this.canvasContext.quadraticCurveTo(
-    //   end - tab.endCurveDiameter,
-    //   base + edge.lineFunction.call(end - tab.endCurveDiameter),
-    //   end,
-    //   base + edge.lineFunction.call(end),
-    // );
   }
 }

@@ -8,8 +8,8 @@ export default class Piece {
   private readonly image: HTMLImageElement | undefined = new Image();
   readonly row: Row;
   readonly column: Column;
-  coordinates: Coordinates;
-  renderStrategy: IRenderStrategy;
+  readonly coordinates: Coordinates;
+  readonly renderStrategy: IRenderStrategy;
 
   constructor(image: HTMLImageElement, row: Row, column: Column, renderStrategy: IRenderStrategy) {
     this.sourceImage = image;
